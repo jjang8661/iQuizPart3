@@ -19,8 +19,9 @@ class QuizTableViewController: UITableViewController {
     
     var jsonData = [AnyObject]()
     
-    var quizNames = [String]()
-    var QuizDetail = [String]()
+
+    var quizNames = ["Science!","Marvel Super Heroes","Mathematics"]
+    var QuizDetail = ["Because SCIENCE!","Avengers, Assemble!","Did you pass the third grade?"]
     var QuestionSet = [[Question]]()
     
     let quizImages = [UIImage(named: "ScienceIcon"),UIImage(named: "HeroIcon"),UIImage(named: "MathIcon")]
@@ -35,16 +36,21 @@ class QuizTableViewController: UITableViewController {
             print("has value")
             jsonData = NSUserDefaults.standardUserDefaults().objectForKey("data") as! [AnyObject]
         } else {
+
             print("no vlaue")
         }
     }
 
     override func viewWillAppear(animated: Bool) {
-        
+          if NSUserDefaults.standardUserDefaults().objectForKey("data") != nil {
         NSUserDefaults.standardUserDefaults().setObject(jsonData, forKey: "data")
         NSUserDefaults.standardUserDefaults().synchronize()
         
         for subject in jsonData {
+            
+            var quizNames = [String]()
+            var QuizDetail = [String]()
+            
             let title = subject["title"]!
             quizNames.append(title as! String)
             
@@ -63,7 +69,7 @@ class QuizTableViewController: UITableViewController {
             }
             QuestionSet.append(questionList)
         }
-
+        }
     }
 
     override func didReceiveMemoryWarning() {
